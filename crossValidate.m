@@ -1,4 +1,8 @@
 function [finalPopulation,finalAccuracy]=crossValidate(agent,classifierType,paramValue,fold)
+    % function to perform folded cross validation on the training set
+    % for k-fold cross validation, the training set is divided into k parts
+    %       Each time, 1 part is used as the test set and other parts are used as train sets
+    % Final accuracy is the average of these k accuracies
     
     global train trainLabel
     
@@ -9,6 +13,7 @@ function [finalPopulation,finalAccuracy]=crossValidate(agent,classifierType,para
     finalAccuracy=zeros(1,numAgents);    
     finalPopulation=agent;
     for loop1=1:numAgents
+    % for each search agent, the training set is divided into (k-1) training parts and testing part
         data=train(:,agent(loop1,:)==1);
         accuracy=zeros(1,fold);
         if (size(data,2)==0)
@@ -36,6 +41,7 @@ function [finalPopulation,finalAccuracy]=crossValidate(agent,classifierType,para
 end
 
 function [selection] = createDivision(fold)
+    % function to divide the dataset into k folds
     global trainLabel 
     rows = size(trainLabel,1);
     sizeTraining=size(trainLabel,1);
