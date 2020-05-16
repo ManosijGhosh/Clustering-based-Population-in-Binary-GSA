@@ -1,9 +1,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%  CPBGSA source codes version 1.0                                    %
+%  CPBGSA source codes version 1.0                                  %
 %                                                                   %
 %  Developed in MATLAB R2016a                                       %
 %                                                                   %
-%   Main Paper:                                                     %
+%   Main Paper: Guha, R., Ghosh, M., Chakrabarti, A., Sarkar, R.,   %
+%                & Mirjalili, S. (2020).                            %
+%                Introducing clustering based population in         %
+%                Binary Gravitational Search Algorithm for          %
+%                Feature Selection. Applied Soft Computing, 106341. %
+%                                                                   %
 %                                                                   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
