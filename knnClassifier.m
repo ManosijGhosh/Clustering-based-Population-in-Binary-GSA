@@ -1,4 +1,5 @@
 function [performance]=knnClassifier(train,trainLabel,test,testLabel,agent,paramValue)
+    % function to compute accuracy of a K-nearest neighbor classifier
     numAgents=size(agent,1);
     performance=zeros(1,numAgents);
     for loop1=1:numAgents
