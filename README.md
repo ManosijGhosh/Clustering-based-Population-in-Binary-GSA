@@ -18,7 +18,7 @@ The following parameters must be prpvided as input to the function main.m file f
 ## Running the code
 * Set all the required parameters
 * run file _main.m_
-Ex - main('BreastCancer',50,30,5,'knn',5)
+* Ex - main('BreastCancer',50,30,5,'knn',5)
 
 Link for algorithm details: [Paper](https://www.sciencedirect.com/science/article/pii/S1568494620302817?casa_token=wgPy0aHcqowAAAAA:GVjs0D_YFci78e9czz88fSstN5s1Jmhnr3fq4XNLVkqY3hgdPRm-8_Fm8fkGl4qPn0KDrMg_tA)
 
