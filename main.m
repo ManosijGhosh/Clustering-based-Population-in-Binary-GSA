@@ -2,8 +2,9 @@
 %  CPBGSA source codes version 1.0                                  %
 %                                                                   %
 %  Developed in MATLAB R2016a                                       %
+%  Programming: Ritam Guha, Akash Chakrabarti, Manosij Ghosh        %
 %                                                                   %
-%   Main Paper: Guha, R., Ghosh, M., Chakrabarti, A., Sarkar, R.,   %
+%  Main Paper: Guha, R., Ghosh, M., Chakrabarti, A., Sarkar, R.,    %
 %                & Mirjalili, S. (2020).                            %
 %                Introducing clustering based population in         %
 %                Binary Gravitational Search Algorithm for          %
@@ -12,9 +13,20 @@
 %                                                                   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%____________________________________________________________________________________________________________________________
+% datasetName = name of the input dataset (divided into train and test samples)
+% numAgents = initial count of search agents (adjusted to 40% as input to BGSA depending on the cluster percentage)
+% numIteration = maximum number of iterations
+% numRuns = number of times the method is applied over the same dataset
+% classifierType = classifier to be used for geenrating accuracy (Here 3 options - 'knn'/'mlp'/'svm') 
+% paramValue = parameter input for classifier (knn - number of neighbors, mlp - no. of hidden layers, svm - kernel type)
+%____________________________________________________________________________________________________________________________
+
 function[] = main(datasetName,numAgents,numIteration,numRuns,classifierType,paramValue)
     
     global train trainLabel test testLabel fold
+    
+    % importing the dataset
     filePath = strcat('Data/',datasetName,'/',datasetName,'_');
     data = importdata(strcat(filePath,'data.mat'));
     train = data.train;
@@ -25,18 +37,23 @@ function[] = main(datasetName,numAgents,numIteration,numRuns,classifierType,para
     numFeatures=size(test,2);
     %initialize your variable here
     methodName='CPBGSA';
-    minFeaturePercentage=30;
-    maxFeaturePercentage=80;
-    fold=3;
-    clusterPercent=40;
+    minFeaturePercentage=30;    % the min percentage of features selected during intialization
+    maxFeaturePercentage=80;    % the max percentage of features selected during intialization
+    fold=3; % number of folds used for cross-validation
+    clusterPercent=40;  % percentage of clusters created during initialization
     numClusters=int16((clusterPercent/100)*numAgents);
     
-    for runNo=1:numRuns
+    for runNo=1:numRuns    
+    % beginning of a run
+    
         histogramPop = zeros(numClusters,numFeatures);
         mkdir(['Results/' datasetName '/'],['Run_' int2str(runNo)]);       
+        
+        % population initialization
         population=dataCreate(numAgents,numFeatures,minFeaturePercentage,maxFeaturePercentage);
                 
         tic
+        % clustering starts
         [index, ~, ~] = clusterWithHammingDist(population,minFeaturePercentage,maxFeaturePercentage,numClusters,classifierType,paramValue,fold);
         acc1=zeros(1,numAgents);
         acc2=zeros(1,numClusters);
@@ -53,10 +70,14 @@ function[] = main(datasetName,numAgents,numIteration,numRuns,classifierType,para
             cutoff = mean(histogramPop(loop,:)); 
             histogramPop(loop,:)=histogramPop(loop,:)>cutoff; 
             [~,acc2(1,loop)]=crossValidate(population(loop1,:),classifierType,paramValue,fold);
-        end
-        
+        end        
         time=toc;
+        % clutering ends 
+        
+        % enters BGSA phase 
         [memory.finalPopulation,memory.finalAccuracy]=mainBGSA(datasetName,numClusters,numIteration,1,classifierType,paramValue,histogramPop);                        
+        
+        % store the results
         mkdir(['Results/' datasetName '/Run_' int2str(runNo)],'Final');
         saveFileName = strcat('Results/',datasetName,'/Run_',int2str(runNo),'/Final/',datasetName,'_result_',methodName,'_pop_',int2str(numAgents),'_iter_',int2str(numIteration),'_',classifierType,'_',int2str(paramValue),'.mat');
         save(saveFileName,'memory','time');        
@@ -64,6 +85,8 @@ function[] = main(datasetName,numAgents,numIteration,numRuns,classifierType,para
 end
 
 function [memory]=updateMemory(memory,population,accuracy)
+
+    % function to update the memory when population is modified
     numFeatures=size(population,2);
     numAgents=2*size(population,1);
     weight1=100;
@@ -82,7 +105,7 @@ function [memory]=updateMemory(memory,population,accuracy)
 end
 
 function []=displayMemory(memory)
-    
+    % function to display the memory containing the population
     numAgents=size(memory.accuracy,2);    
     fprintf('\nIntermediate Memory - \n');
     for loop=1:numAgents/2
