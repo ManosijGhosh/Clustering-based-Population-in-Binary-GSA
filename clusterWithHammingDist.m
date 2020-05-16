@@ -11,7 +11,7 @@ function [index, clusterCenters, sumd] = clusterWithHammingDist(population,minFe
        funcVal = -1.0; 
        clusterAssigned = 1; 
        for clusterIndex = 1:numClusters
-           fit = fitness(sample,clusterCenters(clusterIndex,:),classifierType,paramValue,fold);
+           fit = similarity(sample,clusterCenters(clusterIndex,:),classifierType,paramValue,fold);
            if (fit > funcVal)
               funcVal = fit;
               clusterAssigned = clusterIndex;
