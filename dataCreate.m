@@ -1,4 +1,5 @@
 function [agents] = dataCreate(numAgents,numFeatures,minPercentage,maxPercentage)
+    % function to create random intial population
     rng('shuffle');
     minPercentage = minPercentage/100;
     maxPercentage = maxPercentage/100;
