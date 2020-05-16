@@ -1,4 +1,6 @@
 function [performance]=mlpClassifier(trainTemp,trainLabel,test,testLabel,agent,paramValue)
+% function to compute the accuracy of a multi-layer perceptron classifier  
+
     hiddenLayerSize = paramValue;  
     net = patternnet(hiddenLayerSize);
     net.trainParam.showWindow = false;
