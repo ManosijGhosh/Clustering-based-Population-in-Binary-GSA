@@ -1,4 +1,5 @@
 function [population,accuracy]=populationRank(population,classifierType,paramValue)
+% function to sort the population of agents based on fitness measures
 
 global train trainLabel test testLabel
 rng('shuffle');
