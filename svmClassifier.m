@@ -1,4 +1,6 @@
 function [performance]=svmClassifier(train,trainLabel,test,testLabel,agent,paramValue)
+% function to compute the accuracy of a support vector machine
+
     numAgents=size(agent,1);
     performance=zeros(1,numAgents);
     for loop1=1:numAgents
