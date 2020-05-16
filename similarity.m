@@ -1,5 +1,6 @@
-function [fitnessVal] = fitness(sample,clusterCenter,classifierType,paramValue,fold)
+function [fitnessVal] = similarity(sample,clusterCenter,classifierType,paramValue,fold)
     
+    % similarity calculation according to Eqn. 9
     epsilon = 0.001; 
     [~,sampleClassification] = crossValidate(sample,classifierType,paramValue,fold);
     [~,clusterCenterClassification] = crossValidate(clusterCenter,classifierType,paramValue,fold);
